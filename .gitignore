@@ -21,16 +21,13 @@ playground.xcworkspace
 .DS_Store
 
 # Xcode extra
+build/
 DerivedData/
 *.xcuserstate
 *.xcscmblueprint
 *.xccheckout
 
-.build/
 
-### SwiftPackageManager ###
-Packages
-xcuserdata
 
 
 ### Xcode ###
