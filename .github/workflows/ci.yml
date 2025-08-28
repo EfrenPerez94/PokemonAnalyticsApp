@@ -1,10 +1,8 @@
 name: iOS CI
 
 on:
-  push:
-    branches: ['**']
-  pull_request:
-    branches: ['**']
+  push: { branches: ['**'] }
+  pull_request: { branches: ['**'] }
 
 jobs:
   build-test:
@@ -17,15 +15,34 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_15.4.app || sudo xcode-select -s /Applications/Xcode.app
           xcodebuild -version
 
-      - name: Resolve packages
-        run: xcodebuild -project PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj -resolvePackageDependencies
+      - name: Locate Xcode project & shared scheme
+        run: |
+          set -euo pipefail
+          PROJ="$(find . -maxdepth 2 -type d -name '*.xcodeproj' | head -n1 || true)"
+          if [ -z "$PROJ" ]; then
+            echo "::error::No .xcodeproj found. Tree:"; find . -maxdepth 3 -print; exit 1
+          fi
+          echo "PROJECT: $PROJ"
 
-      - name: Build & Test (runs SwiftLint plugin if attached)
+          SCHEME="$(ls -1 "$PROJ"/xcshareddata/xcschemes/*.xcscheme 2>/dev/null | sed 's#.*/##; s#.xcscheme$##' | head -n1 || true)"
+          if [ -z "$SCHEME" ]; then
+            echo "::group::Schemes (not shared yet?)"
+            xcodebuild -list -project "$PROJ" || true
+            echo "::endgroup::"
+            echo "::error::No shared scheme found. En Xcode: Product > Scheme > Manage Schemes… > tilda 'Shared' y commitea *.xcscheme"
+            exit 1
+          fi
+
+          echo "SCHEME=$SCHEME" >> $GITHUB_ENV
+          echo "PROJ=$PROJ" >> $GITHUB_ENV
+          echo "Using scheme: $SCHEME"
+
+      - name: Build & Test (SwiftLint plugin corre durante el build si está agregado)
         run: |
           set -o pipefail
           xcodebuild \
-            -project PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj \
-            -scheme "PokemonAnalyticsApp" \
-            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -project "$PROJ" \
+            -scheme "$SCHEME" \
+            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' \
             -skipPackagePluginValidation -skipMacroValidation \
             clean test | tee xcodebuild.log
