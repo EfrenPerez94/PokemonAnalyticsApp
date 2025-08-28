@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 struct UIKitRootView: UIViewControllerRepresentable {
-    
+
     func makeUIViewController(context: Context) -> UINavigationController {
         let nav = UINavigationController()
         let coordinator = AppCoordinator(navigation: nav)
@@ -17,11 +17,11 @@ struct UIKitRootView: UIViewControllerRepresentable {
         coordinator.start()
         return nav
     }
-    
+
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-        
+
     }
-    
+
     func makeCoordinator() -> Holder {
         Holder()
     }

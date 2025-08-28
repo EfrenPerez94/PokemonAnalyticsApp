@@ -10,15 +10,15 @@ import SwiftUI
 
 final class AppCoordinator {
     private let navigation: UINavigationController
-    
+
     init(navigation: UINavigationController) {
         self.navigation = navigation
     }
 
     func start() {
         let root = Text("Pokedex") // For testing
-        let vc = UIHostingController(rootView: root)
-        vc.title = "Pokemon"
-        navigation.setViewControllers([vc], animated: false)
+        let viewController = UIHostingController(rootView: root)
+        viewController.title = "Pokemon"
+        navigation.setViewControllers([viewController], animated: false)
     }
 }

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		324E1F252E60517900A42BCE /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324E1F242E60517900A42BCE /* SwiftData.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		324E1EE02E60421F00A42BCE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,24 +31,8 @@
 		324E1ECD2E60421E00A42BCE /* PokemonAnalyticsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonAnalyticsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		324E1EDF2E60421F00A42BCE /* PokemonAnalyticsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonAnalyticsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		324E1EE92E60421F00A42BCE /* PokemonAnalyticsAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonAnalyticsAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		324E1F242E60517900A42BCE /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/SwiftData.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		324E1F052E6047DE00A42BCE /* Exceptions for "PokemonAnalyticsAppTests" folder in "PokemonAnalyticsAppTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				FavoritePokemonTests.swift,
-			);
-			target = 324E1EDE2E60421F00A42BCE /* PokemonAnalyticsAppTests */;
-		};
-		324E1F062E6047DE00A42BCE /* Exceptions for "PokemonAnalyticsAppTests" folder in "PokemonAnalyticsAppUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				FavoritePokemonTests.swift,
-			);
-			target = 324E1EE82E60421F00A42BCE /* PokemonAnalyticsAppUITests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		324E1ECF2E60421E00A42BCE /* PokemonAnalyticsApp */ = {
@@ -54,10 +42,6 @@
 		};
 		324E1EE22E60421F00A42BCE /* PokemonAnalyticsAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				324E1F052E6047DE00A42BCE /* Exceptions for "PokemonAnalyticsAppTests" folder in "PokemonAnalyticsAppTests" target */,
-				324E1F062E6047DE00A42BCE /* Exceptions for "PokemonAnalyticsAppTests" folder in "PokemonAnalyticsAppUITests" target */,
-			);
 			path = PokemonAnalyticsAppTests;
 			sourceTree = "<group>";
 		};
@@ -80,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				324E1F252E60517900A42BCE /* SwiftData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +84,7 @@
 				324E1ECF2E60421E00A42BCE /* PokemonAnalyticsApp */,
 				324E1EE22E60421F00A42BCE /* PokemonAnalyticsAppTests */,
 				324E1EEC2E60421F00A42BCE /* PokemonAnalyticsAppUITests */,
+				324E1F232E60517900A42BCE /* Frameworks */,
 				324E1ECE2E60421E00A42BCE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -111,6 +97,14 @@
 				324E1EE92E60421F00A42BCE /* PokemonAnalyticsAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		324E1F232E60517900A42BCE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				324E1F242E60517900A42BCE /* SwiftData.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +121,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				324E1F092E604AEC00A42BCE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				324E1ECF2E60421E00A42BCE /* PokemonAnalyticsApp */,
@@ -216,6 +211,9 @@
 			);
 			mainGroup = 324E1EC42E60421E00A42BCE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				324E1F072E604AC300A42BCE /* XCRemoteSwiftPackageReference "SwiftLint" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 324E1ECE2E60421E00A42BCE /* Products */;
 			projectDirPath = "";
@@ -286,6 +284,10 @@
 			isa = PBXTargetDependency;
 			target = 324E1ECC2E60421E00A42BCE /* PokemonAnalyticsApp */;
 			targetProxy = 324E1EEA2E60421F00A42BCE /* PBXContainerItemProxy */;
+		};
+		324E1F092E604AEC00A42BCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 324E1F082E604AEC00A42BCE /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -425,6 +427,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,6 +457,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -475,7 +479,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3QTZ8LQR95;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = efren.PokemonAnalyticsAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -494,7 +498,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3QTZ8LQR95;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = efren.PokemonAnalyticsAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -512,6 +516,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3QTZ8LQR95;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = efren.PokemonAnalyticsAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -529,6 +534,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3QTZ8LQR95;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = efren.PokemonAnalyticsAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -579,6 +585,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		324E1F072E604AC300A42BCE /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.59.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		324E1F082E604AEC00A42BCE /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 324E1F072E604AC300A42BCE /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 324E1EC52E60421E00A42BCE /* Project object */;
 }

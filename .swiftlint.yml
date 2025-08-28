@@ -1,0 +1,65 @@
+disabled_rules:
+  - colon
+  - comma
+  - control_statement
+
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - unused_import
+  - redundant_type_annotation
+  - fatal_error_message
+
+analyzer_rules:
+  - explicit_self
+
+included:
+  - .
+  
+excluded:
+  - Carthage
+  - Pods
+  - Sources/ExcludedFolder
+  - Sources/ExcludedFile.swift
+  - Sources/*/ExcludedFile.swift
+
+allow_zero_lintable_files: false
+strict: false
+lenient: false
+
+baseline: Baseline.json
+write_baseline: Baseline.json
+check_for_updates: true
+
+force_cast: warning
+force_try:
+  severity: warning
+force_unwrapping:
+  severity: error
+implicitly_unwrapped_optional:
+  severity: error
+
+line_length: 110
+type_body_length:
+  - 300
+  - 400
+file_length:
+  warning: 500
+  error: 1200
+type_name:
+  min_length: 4
+  max_length:
+    warning: 40
+    error: 50
+  excluded: iPhone
+  allowed_symbols: ["_"]
+identifier_name:
+  min_length:
+    error: 3
+  excluded:
+    - id
+    - URL
+    - GlobalAPIKey
+
+reporter: "xcode"
