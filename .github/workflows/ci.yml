@@ -1,4 +1,5 @@
 name: iOS CI
+
 on:
   push: { branches: ['**'] }
   pull_request: { branches: ['**'] }
@@ -9,21 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Xcode 16.2
-        uses: maxim-lobanov/setup-xcode@v1
+      # Selecciona Xcode 16.2 (o la 16.x disponible)
+      - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '16.2'
 
       - run: xcodebuild -version
-
-      - name: Resolve packages (if any)
-        run: |
-          PROJ=PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj
-          if grep -q 'XCRemoteSwiftPackageReference' "$PROJ/project.pbxproj"; then
-            xcodebuild -project "$PROJ" -resolvePackageDependencies
-          else
-            echo "No SPM packages referenced → skipping."
-          fi
 
       - name: Build & Test
         run: |
@@ -33,5 +25,6 @@ jobs:
             -scheme "PokemonAnalyticsApp" \
             -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' \
             -skipPackagePluginValidation -skipMacroValidation \
+            clean test | tee xcodebuild.log
             clean test | tee xcodebuild.log
 
