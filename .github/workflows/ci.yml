@@ -1,7 +1,7 @@
 name: iOS CI
 
 on:
-  # push: { branches: ['**'] }
+  push: { branches: ['**'] }
   pull_request: { branches: ['**'] }
 
 jobs:
@@ -10,30 +10,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Selecciona Xcode 16.2 (o la 16.x disponible)
+      # Selecciona Xcode 16.2 (compatible con tu .xcodeproj)
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '16.2'
 
       - run: xcodebuild -version
 
-      - name: Resolve packages (if any)
-        run: |
-          PROJ=PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj
-          if grep -q 'XCRemoteSwiftPackageReference' "$PROJ/project.pbxproj"; then
-            xcodebuild -project "$PROJ" -resolvePackageDependencies
-          else
-            echo "No SPM packages referenced → skipping."
-          fi
-          
+      # Resuelve dependencias SPM si las hay (fallará si el proyecto no referencia paquetes)
+      - name: Resolve packages
+        run: >
+          xcodebuild
+          -project "PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj"
+          -resolvePackageDependencies
+
+      # Build + Tests (el plugin de SwiftLint corre durante el build si está agregado)
       - name: Build & Test
-        run: |
-          set -o pipefail
-          xcodebuild \
-            -project PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj \
-            -scheme "PokemonAnalyticsApp" \
-            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' \
-            -skipPackagePluginValidation -skipMacroValidation \
-            clean test | tee xcodebuild.log
-            clean test | tee xcodebuild.log
+        run: >
+          set -o pipefail &&
+          xcodebuild
+          -project "PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj"
+          -scheme "PokemonAnalyticsApp"
+          -destination "platform=iOS Simulator,OS=latest,name=iPhone 16"
+          -skipPackagePluginValidation -skipMacroValidation
+          clean test | tee xcodebuild.log
 
