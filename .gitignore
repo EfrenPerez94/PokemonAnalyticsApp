@@ -26,9 +26,16 @@ DerivedData/
 *.xcscmblueprint
 *.xccheckout
 
-# Swift Package Manager
-# .swiftpm/
 .build/
+
+### SwiftPackageManager ###
+Packages
+xcuserdata
+
+
+### Xcode ###
+# Xcode
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
 Carthage/Build/
 
