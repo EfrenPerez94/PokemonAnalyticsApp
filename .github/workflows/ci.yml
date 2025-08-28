@@ -1,10 +1,7 @@
 name: iOS CI
-
 on:
-  push:
-    branches: [ "**" ]
-  pull_request:
-    branches: [ "**" ]
+  push: { branches: ["**"] }
+  pull_request: { branches: ["**"] }
 
 jobs:
   build-test:
@@ -18,6 +15,16 @@ jobs:
           sudo xcode-select -s /Applications/Xcode.app
           xcodebuild -version
 
+      - name: Find Xcode project/workspace
+        id: locate
+        run: |
+          PROJ=$(ls -1 *.xcodeproj */*.xcodeproj 2>/dev/null | head -n1)
+          WORK=$(ls -1 *.xcworkspace */*.xcworkspace 2>/dev/null | head -n1)
+          echo "PROJ=$PROJ" >> $GITHUB_ENV
+          echo "WORK=$WORK" >> $GITHUB_ENV
+          echo "Found project: $PROJ"
+          echo "Found workspace: $WORK"
+
       - name: Cache SPM
         uses: actions/cache@v4
         with:
@@ -28,13 +35,19 @@ jobs:
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
 
       - name: Resolve packages
-        run: xcodebuild -resolvePackageDependencies
+        run: |
+          if [ -n "$WORK" ]; then
+            xcodebuild -workspace "$WORK" -resolvePackageDependencies
+          else
+            xcodebuild -project "$PROJ" -resolvePackageDependencies
+          fi
 
       - name: Build & Test (runs SwiftLint plugin too)
         run: |
           set -o pipefail
-          xcodebuild \
-            -scheme "PokemonAnalyticsApp" \
-            -destination 'platform=iOS Simulator,name=iPhone 15' \
-            -skipPackagePluginValidation -skipMacroValidation \
-            clean test | tee xcodebuild.log
+          DEST="platform=iOS Simulator,name=iPhone 15"
+          if [ -n "$WORK" ]; then
+            xcodebuild -workspace "$WORK" -scheme "PokemonAnalyticsApp" -destination "$DEST" -skipPackagePluginValidation -skipMacroValidation clean test | tee xcodebuild.log
+          else
+            xcodebuild -project "$PROJ" -scheme "PokemonAnalyticsApp" -destination "$DEST" -skipPackagePluginValidation -skipMacroValidation clean test | tee xcodebuild.log
+          fi
