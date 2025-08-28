@@ -17,6 +17,15 @@ jobs:
 
       - run: xcodebuild -version
 
+      - name: Resolve packages (if any)
+        run: |
+          PROJ=PokemonAnalyticsApp/PokemonAnalyticsApp.xcodeproj
+          if grep -q 'XCRemoteSwiftPackageReference' "$PROJ/project.pbxproj"; then
+            xcodebuild -project "$PROJ" -resolvePackageDependencies
+          else
+            echo "No SPM packages referenced → skipping."
+          fi
+          
       - name: Build & Test
         run: |
           set -o pipefail
