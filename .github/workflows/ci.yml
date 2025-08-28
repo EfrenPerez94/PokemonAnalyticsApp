@@ -1,7 +1,12 @@
 name: iOS CI
+
 on:
   push: { branches: ["**"] }
   pull_request: { branches: ["**"] }
+
+env:
+  SCHEME: PokemonAnalyticsApp
+  DEST: platform=iOS Simulator,name=iPhone 15
 
 jobs:
   build-test:
@@ -15,10 +20,21 @@ jobs:
           sudo xcode-select -s /Applications/Xcode.app
           xcodebuild -version
 
-      - name: Debug tree
+      - name: Locate Xcode project/workspace (robusto)
+        id: locate
         run: |
-          ls -la
-          ls -la PokemonAnalyticsApp
+          set -euo pipefail
+          PROJ="$(git ls-files '**/*.xcodeproj' | head -n1 || true)"
+          WORK="$(git ls-files '**/*.xcworkspace' | head -n1 || true)"
+          if [ -z "$PROJ" ] && [ -z "$WORK" ]; then
+            echo "::error::No .xcodeproj/.xcworkspace tracked in this branch."
+            echo "Tree (3 niveles):"; find . -maxdepth 3 -print
+            exit 1
+          fi
+          echo "PROJ=$PROJ" >> $GITHUB_ENV
+          echo "WORK=$WORK" >> $GITHUB_ENV
+          echo "Found project: ${PROJ:-<none>}"
+          echo "Found workspace: ${WORK:-<none>}"
 
       - name: Cache SPM
         uses: actions/cache@v4
@@ -30,16 +46,22 @@ jobs:
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
 
       - name: Resolve packages
-        working-directory: PokemonAnalyticsApp
-        run: xcodebuild -project PokemonAnalyticsApp.xcodeproj -resolvePackageDependencies
+        run: |
+          if [ -n "$WORK" ]; then
+            xcodebuild -workspace "$WORK" -resolvePackageDependencies
+          else
+            xcodebuild -project "$PROJ" -resolvePackageDependencies
+          fi
 
-      - name: Build & Test (runs SwiftLint plugin too)
-        working-directory: PokemonAnalyticsApp
+      - name: Build & Test (SwiftLint plugin se ejecuta aquí)
         run: |
           set -o pipefail
-          xcodebuild \
-            -project PokemonAnalyticsApp.xcodeproj \
-            -scheme "PokemonAnalyticsApp" \
-            -destination 'platform=iOS Simulator,name=iPhone 15' \
-            -skipPackagePluginValidation -skipMacroValidation \
-            clean test | tee xcodebuild.log
+          if [ -n "$WORK" ]; then
+            xcodebuild -workspace "$WORK" -scheme "$SCHEME" -destination "$DEST" \
+              -skipPackagePluginValidation -skipMacroValidation \
+              clean test | tee xcodebuild.log
+          else
+            xcodebuild -project "$PROJ" -scheme "$SCHEME" -destination "$DEST" \
+              -skipPackagePluginValidation -skipMacroValidation \
+              clean test | tee xcodebuild.log
+          fi
