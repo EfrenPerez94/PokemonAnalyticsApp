@@ -7,12 +7,22 @@
 
 import UIKit
 import SwiftUI
+import SwiftData
 
 final class AppCoordinator {
     private let navigation: UINavigationController
+    private let modelContainer: ModelContainer
+    private let api: PokeAPI
 
-    init(navigation: UINavigationController) {
+    init(navigation: UINavigationController, modelContainer: ModelContainer) {
         self.navigation = navigation
+        self.modelContainer = modelContainer
+        
+        let httpSession = URLSessionHTTPClient()
+        #if DEBUG
+        httpSession.simulateError = false
+        #endif
+        self.api = PokeAPIService(httpClient: httpSession)
     }
 
     func start() {

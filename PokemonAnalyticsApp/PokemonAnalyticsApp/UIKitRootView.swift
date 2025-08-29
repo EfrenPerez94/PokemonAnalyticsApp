@@ -7,12 +7,15 @@
 
 import SwiftUI
 import UIKit
+import SwiftData
 
 struct UIKitRootView: UIViewControllerRepresentable {
 
+    @Environment(\.modelContext) private var modelContext
+
     func makeUIViewController(context: Context) -> UINavigationController {
         let nav = UINavigationController()
-        let coordinator = AppCoordinator(navigation: nav)
+        let coordinator = AppCoordinator(navigation: nav, modelContainer: modelContext.container)
         context.coordinator.hold = coordinator
         coordinator.start()
         return nav
