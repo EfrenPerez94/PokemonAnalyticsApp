@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct PokemonAnalyticsApp: App {
-    
+
     var body: some Scene {
         WindowGroup {
             UIKitRootView()

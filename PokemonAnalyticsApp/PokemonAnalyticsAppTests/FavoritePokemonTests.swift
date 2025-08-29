@@ -15,17 +15,12 @@ final class FavoritePokemonTests: XCTestCase {
     var container: ModelContainer!
     var context: ModelContext!
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
         let cfg = ModelConfiguration(isStoredInMemoryOnly: true)
-        container = try! ModelContainer(for: FavoritePokemon.self, configurations: cfg)
+        container = try ModelContainer(for: FavoritePokemon.self, configurations: cfg)
         context = ModelContext(container)
     }
     
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
