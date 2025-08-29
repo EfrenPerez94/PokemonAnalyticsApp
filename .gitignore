@@ -44,7 +44,12 @@ playground.xcworkspace
 # hence it is not needed unless you have added a package configuration file to your project
 # .swiftpm
 
-.build/
+# Xcode extra
+build/
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
 
 # CocoaPods
 # We recommend against adding the Pods directory to your .gitignore. However
@@ -57,6 +62,7 @@ playground.xcworkspace
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
+
 
 Carthage/Build/
 
