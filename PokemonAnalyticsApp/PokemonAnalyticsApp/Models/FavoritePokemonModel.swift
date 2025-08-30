@@ -21,4 +21,8 @@ final class FavoritePokemon {
         self.dateAdded = dateAdded
     }
 
+    var imageURL: URL? {
+        return URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png")
+    }
+
 }

@@ -15,14 +15,14 @@ struct UIKitRootView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UINavigationController {
         let nav = UINavigationController()
-        let coordinator = AppCoordinator(navigation: nav, modelContainer: modelContext.container)
-        context.coordinator.hold = coordinator
-        coordinator.start()
+        let app = AppCoordinator(modelContainer: modelContext.container)
+        context.coordinator.hold = app
+        app.start(in: nav)
         return nav
     }
 
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-
+    
     }
 
     func makeCoordinator() -> Holder {

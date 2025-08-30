@@ -418,7 +418,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PokemonAnalyticsApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PokemonAnalyticsApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 3QTZ8LQR95;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -448,7 +448,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PokemonAnalyticsApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PokemonAnalyticsApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 3QTZ8LQR95;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
