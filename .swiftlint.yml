@@ -40,7 +40,7 @@ force_unwrapping:
 implicitly_unwrapped_optional:
   severity: error
 
-line_length: 110
+line_length: 150
 type_body_length:
   - 300
   - 400

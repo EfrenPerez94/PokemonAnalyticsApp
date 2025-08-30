@@ -43,7 +43,8 @@ final class PokemonDetailViewModel: ObservableObject {
                 isFavorite = false
             } else {
                 if let name = try currentPokemon()?.name {
-                    context.insert(FavoritePokemon(id: pokemonId, name: name))
+                    let stringURL = "https://pokeapi.co/api/v2/pokemon/\(pokemonId)/"
+                    context.insert(FavoritePokemon(id: pokemonId, name: name, url: stringURL))
                     isFavorite = true
                 }
             }
@@ -72,7 +73,7 @@ final class PokemonDetailViewModel: ObservableObject {
             }
         }
     }
-    
+
     struct DonutSection: Identifiable, Equatable {
         let id = UUID()
         let label: String
