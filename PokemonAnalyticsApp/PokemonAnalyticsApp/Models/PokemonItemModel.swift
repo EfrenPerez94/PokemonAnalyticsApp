@@ -17,4 +17,9 @@ struct PokemonItemModel: Codable, Equatable {
         guard let id = id else { return nil }
         return URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png")
     }
+    
+    init(name: String, url: String) {
+        self.name = name
+        self.url = url
+    }
 }

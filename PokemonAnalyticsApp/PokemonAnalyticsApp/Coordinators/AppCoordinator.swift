@@ -11,6 +11,7 @@ import SwiftData
 
 final class AppCoordinator {
     private let tabBar = UITabBarController()
+    private var tabCoordinator: TabBarCoordinator?
     private let modelContainer: ModelContainer
     private let api: PokeAPI
 
@@ -28,6 +29,7 @@ final class AppCoordinator {
     func start(in navController: UINavigationController) {
         let tabBarCoordinator = TabBarCoordinator(api: api, modelContainer: modelContainer)
         tabBarCoordinator.start(on: tabBar)
+        tabCoordinator = tabBarCoordinator
         navController.setViewControllers([tabBar], animated: false)
         navController.isNavigationBarHidden = true
     }

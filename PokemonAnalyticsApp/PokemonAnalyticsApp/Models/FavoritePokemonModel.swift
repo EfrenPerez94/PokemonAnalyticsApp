@@ -13,12 +13,12 @@ final class FavoritePokemon {
 
     @Attribute(.unique) var id: Int
     var name: String
-    var dateAdded: Date
+    var url: String
 
-    init(id: Int, name: String, dateAdded: Date = Date()) {
+    init(id: Int, name: String, url: String) {
         self.id = id
         self.name = name
-        self.dateAdded = dateAdded
+        self.url = url
     }
 
     var imageURL: URL? {

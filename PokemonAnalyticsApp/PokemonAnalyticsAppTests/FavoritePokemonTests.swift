@@ -26,7 +26,7 @@ final class FavoritePokemonTests: XCTestCase {
     }
 
     func testInsertAndFetchFavorite() throws {
-        context.insert(FavoritePokemon(id: 25, name: "pikachu"))
+        context.insert(FavoritePokemon(id: 25, name: "pikachu", url: ""))
         try context.save()
         let fd = FetchDescriptor<FavoritePokemon>(predicate: #Predicate { $0.id == 25 })
         let results = try context.fetch(fd)
@@ -34,7 +34,7 @@ final class FavoritePokemonTests: XCTestCase {
     }
 
     func testDeleteFavorite() throws {
-        let fav = FavoritePokemon(id: 1, name: "charmander")
+        let fav = FavoritePokemon(id: 1, name: "charmander", url: "")
         context.insert(fav)
         try context.save()
         context.delete(fav)

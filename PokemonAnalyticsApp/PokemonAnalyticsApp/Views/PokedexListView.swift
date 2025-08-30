@@ -13,37 +13,13 @@ struct PokedexListView: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.items, id: \.id) { pokemon in
-                HStack(spacing: 12) {
-                    AsyncImage(url: pokemon.imageURL) { phase in
-                        switch phase {
-                        case .success(let sprite):
-                            sprite
-                                .resizable()
-                                .scaledToFit()
-                        case .failure:
-                            //poner imagen default
-                            Color.gray.opacity(0.2)
-                        case .empty:
-                            ProgressView()
-                        @unknown default:
-                            //poner imagen default
-                            Color.gray.opacity(0.2)
-                        }
-                    }
-                    .frame(width: 50, height: 50)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-
-                    Text(pokemon.name)
-                        .font(.system(size: 16, weight: .semibold))
-                    Spacer()
-                }
-                .contentShape(Rectangle())
+            ForEach(viewModel.filteredPokemons, id: \.id) { pokemon in
+                PokemonCellView(pokemon: pokemon)
                 .onTapGesture { onPokemonSelect(pokemon) }
                 .onAppear {
-                    viewModel.loadNextPage(pokemon) }
+                    viewModel.loadNextPage(pokemon)
+                }
             }
-
             // Loading footer
             if case .fetching = viewModel.state {
                 HStack {
@@ -54,6 +30,7 @@ struct PokedexListView: View {
                 .listRowSeparator(.hidden)
             }
         }
+        .searchable(text: $viewModel.searchText, prompt: "Search name or #id")
         .listStyle(.plain)
         .task {
             await viewModel.loadFirstPage()

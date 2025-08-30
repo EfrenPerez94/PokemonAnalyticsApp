@@ -13,7 +13,10 @@ final class PokedexListViewModel: ObservableObject {
 
     @Published private(set) var items: [PokemonItemModel] = []
     @Published private(set) var state: RequestState<[PokemonItemModel]> = .idle
-
+    @Published var searchText: String = ""
+    @Published private(set) var isSearching: Bool = false
+    @Published private(set) var searchResults: [PokemonItemModel] = []
+    
     private var offset: Int = 0
     private let pageSize: Int = 30
     private var canLoadMore: Bool = true
@@ -35,6 +38,20 @@ final class PokedexListViewModel: ObservableObject {
                 Task { await self.loadNextPage() }
             }
             .store(in: &cancellables)
+    }
+    
+    var filteredPokemons: [PokemonItemModel] {
+        if searchText.isEmpty {
+            return items
+        } else {
+            let filteredPokemons = items.filter { $0.name.contains(searchText.lowercased()) }
+            if filteredPokemons.count < 20 && searchText.count < 3 {
+                Task {
+                    await loadNextPage()
+                }
+            }
+            return filteredPokemons
+        }
     }
 
     func loadFirstPage() async {
