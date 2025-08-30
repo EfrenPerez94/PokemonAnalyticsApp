@@ -41,17 +41,6 @@ final class TabBarCoordinator {
         favNav.setViewControllers([favVC], animated: false)
         favNav.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "star"), selectedImage: nil)
 
-        // Tab 3: Insights (placeholder por ahora)
-        let insightsNav = UINavigationController()
-        let insightsVC = UIHostingController(rootView: Text("Insights (coming soon)")
-            .padding()
-            .modelContainer(modelContainer))
-        insightsVC.title = "Insights"
-        insightsNav.setViewControllers([insightsVC], animated: false)
-        insightsNav.tabBarItem = UITabBarItem(title: "Insights",
-                                              image: UIImage(systemName: "chart.bar"),
-                                              selectedImage: nil)
-
-        tabBar.viewControllers = [pokedexNavigationController, favNav, insightsNav]
+        tabBar.viewControllers = [pokedexNavigationController, favNav]
     }
 }
