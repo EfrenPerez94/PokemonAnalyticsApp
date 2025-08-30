@@ -56,16 +56,16 @@ enum AppError: Error, LocalizedError, Equatable {
             (.forbidden, .forbidden), (.offline, .offline),
             (.decoding, .decoding):
             return true
-        case (.http(let codeA), .http(let codeB)):
-            return codeA == codeB
-        case (.invalidResponse(let errorA), .invalidResponse(let errorB)):
-            return errorA == errorB
-        case (.persistence(let errorA), .persistence(let errorB)):
-            return errorA == errorB
-        case (.other(let errorA), .other(let errorB)):
-            return errorA == errorB
-        case (.network(let errorA), .network(let errorB)):
-            return errorA.code == errorB.code
+        case (.http(let code1), .http(let code2)):
+            return code1 == code2
+        case (.invalidResponse(let error1), .invalidResponse(let error2)):
+            return error1 == error2
+        case (.persistence(let error1), .persistence(let error2)):
+            return error1 == error2
+        case (.other(let error1), .other(let error2)):
+            return error1 == error2
+        case (.network(let error1), .network(let error2)):
+            return error1.code == error2.code
         default:
             return false
         }

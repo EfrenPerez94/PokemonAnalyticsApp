@@ -10,25 +10,25 @@ import SwiftUI
 import SwiftData
 
 final class AppCoordinator {
-    private let navigation: UINavigationController
+    private let tabBar = UITabBarController()
     private let modelContainer: ModelContainer
     private let api: PokeAPI
 
-    init(navigation: UINavigationController, modelContainer: ModelContainer) {
-        self.navigation = navigation
+    init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
-        
-        let httpSession = URLSessionHTTPClient()
+
+        let http = URLSessionHTTPClient()
         #if DEBUG
-        httpSession.simulateError = false
+        http.simulateError = false
         #endif
-        self.api = PokeAPIService(httpClient: httpSession)
+        self.api = PokeAPIService(httpClient: http)
     }
 
-    func start() {
-        let root = Text("Pokedex") // For testing
-        let viewController = UIHostingController(rootView: root)
-        viewController.title = "Pokemon"
-        navigation.setViewControllers([viewController], animated: false)
+    @MainActor
+    func start(in navController: UINavigationController) {
+        let tabBarCoordinator = TabBarCoordinator(api: api, modelContainer: modelContainer)
+        tabBarCoordinator.start(on: tabBar)
+        navController.setViewControllers([tabBar], animated: false)
+        navController.isNavigationBarHidden = true
     }
 }
